@@ -24,6 +24,20 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', routes);
 app.use('/users', users);
 
+
+/***** add irving code 2014年5月27日 10:32:05 *********/
+app.use('/req', function(req, res){
+    var request = require('request');
+    request('http://www.baidu.com', function (error, response, body) {
+        if (!error && response.statusCode == 200) {
+            res.send(body);
+        }
+    })
+});
+/**********************************************************/
+
+
+
 /// catch 404 and forward to error handler
 app.use(function(req, res, next) {
     var err = new Error('Not Found');
@@ -45,6 +59,7 @@ if (app.get('env') === 'development') {
     });
 }
 
+
 // production error handler
 // no stacktraces leaked to user
 app.use(function(err, req, res, next) {
@@ -54,6 +69,4 @@ app.use(function(err, req, res, next) {
         error: {}
     });
 });
-
-
 module.exports = app;
