@@ -39,6 +39,6 @@ dependency-reduced-pom.xml
 
 #NodeJS
 node_modules
-
+/logs
 README.html
 
