@@ -9,6 +9,7 @@ var routes = require('./routes/index');
 var users = require('./routes/users');
 
 var app = express();
+
 //log4js
 var log4js = require('log4js');
 log4js.configure({
