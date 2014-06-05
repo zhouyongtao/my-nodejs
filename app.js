@@ -1,7 +1,7 @@
 var express = require('express');
 var path = require('path');
 var favicon = require('static-favicon');
-var logger = require('morgan');
+//var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 
@@ -9,13 +9,30 @@ var routes = require('./routes/index');
 var users = require('./routes/users');
 
 var app = express();
+//log4js
+var log4js = require('log4js');
+log4js.configure({
+    appenders: [
+        { type: 'console' }, //控制台输出
+        {
+            type: 'file', //文件输出
+            filename: 'logs/access.log',
+            maxLogSize: 1024,
+            backups:3,
+            category: 'normal'
+        }
+    ]
+});
+var logger = log4js.getLogger('normal');
+logger.setLevel('INFO');
+app.use(log4js.connectLogger(logger, {level:log4js.levels.INFO}));
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 
 app.use(favicon());
-app.use(logger('dev'));
+//app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded());
 app.use(cookieParser());
@@ -35,7 +52,6 @@ app.use('/req', function(req, res){
     })
 });
 /**********************************************************/
-
 
 
 /// catch 404 and forward to error handler
